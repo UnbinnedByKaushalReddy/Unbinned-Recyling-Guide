@@ -37,7 +37,7 @@ st.set_page_config(page_title="Unbinned Recycling Guide", page_icon="♻️", la
 
 st.title("♻️ Unbinned: Plastic Bag Recycling Guide 🌍")
 st.image("https://images.unsplash.com/photo-1604187351574-c75ca79f5807?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", 
-         caption="Stop plastic waste. Recycle responsibly!", use_column_width=True)
+         caption="Stop plastic waste. Recycle responsibly!", use_container_width=True)
 
 st.markdown("### 🧐 Do You Know Where Plastic Bags Should Be Recycled?")
 user_recycle = st.radio("Where do plastic bags go?", ("Curbside Bin", "Trash", "Designated Drop-Off Locations"))
