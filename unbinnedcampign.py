@@ -1,83 +1,94 @@
 import streamlit as st
 
-recycling_centers = {
-    "Frisco": [
-        {"name": "Frisco Environmental Collection Center", "address": "6616 Walnut St, Frisco, TX"},
-        {"name": "Target Recycling Station", "address": "3201 Preston Rd, Frisco, TX"},
-        {"name": "Whole Foods Market", "address": "9280 Dallas Pkwy, Frisco, TX"},
-        {"name": "Walmart Plastic Bag Drop-Off", "address": "8555 Preston Rd, Frisco, TX"},
-    ],
-    "Plano": [
-        {"name": "Plano Recycling Drop-Off", "address": "4200 W Plano Pkwy, Plano, TX"},
-        {"name": "Kroger Recycling", "address": "Coit Rd, Plano, TX"},
-        {"name": "Tom Thumb Bag Drop-Off", "address": "3945 Legacy Dr, Plano, TX"},
-        {"name": "Trader Joe’s Recycle Center", "address": "2400 Preston Rd, Plano, TX"},
-    ],
-    "Dallas": [
-        {"name": "Dallas Recycling Center", "address": "123 Green Ave, Dallas, TX"},
-        {"name": "EcoDrop Dallas", "address": "789 Blue St, Dallas, TX"},
-        {"name": "Sprouts Farmers Market", "address": "11722 Marsh Ln, Dallas, TX"},
-        {"name": "Lowe’s Plastic Bag Recycle Bin", "address": "11920 Inwood Rd, Dallas, TX"},
-    ],
-    "Austin": [
-        {"name": "Austin Recycling Center", "address": "2514 Business Center Dr, Austin, TX"},
-        {"name": "H-E-B Plastic Bag Recycle Station", "address": "7301 N FM 620, Austin, TX"},
-        {"name": "Central Market Drop-Off", "address": "4477 S Lamar Blvd, Austin, TX"},
-        {"name": "Whole Foods Market", "address": "525 N Lamar Blvd, Austin, TX"},
-    ],
-    "Houston": [
-        {"name": "Houston Eco Recycling", "address": "5900 Westpark Dr, Houston, TX"},
-        {"name": "H-E-B Plastic Bag Drop", "address": "1701 W Alabama St, Houston, TX"},
-        {"name": "Walmart Recycle Bin", "address": "2391 S Wayside Dr, Houston, TX"},
-        {"name": "Trader Joe’s Recycle Center", "address": "1440 S Voss Rd, Houston, TX"},
-    ],
-}
+# Page Configuration
+st.set_page_config(page_title="Unbinned Guide", page_icon="♻️", layout="wide")
 
-st.set_page_config(page_title="Unbinned Recycling Guide", page_icon="♻️", layout="wide")
+# Header Section
+st.title("♻️ Unbinned Guide: Plastic Bag Recycling Made Easy 🌍")
+st.markdown("### Helping you find the right way to recycle plastic bags and adopt eco-friendly habits.")
 
-st.title("♻️ Unbinned: Plastic Bag Recycling Guide 🌍")
-st.image("https://images.unsplash.com/photo-1604187351574-c75ca79f5807?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", 
-         caption="Stop plastic waste. Recycle responsibly!", use_container_width=True)
+# Header Image
+st.image(
+    "https://images.unsplash.com/photo-1604187351574-c75ca79f5807?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    caption="Stop plastic waste. Recycle responsibly!",
+    use_column_width=True
+)
 
-st.markdown("### 🧐 Do You Know Where Plastic Bags Should Be Recycled?")
-user_recycle = st.radio("Where do plastic bags go?", ("Curbside Bin", "Trash", "Designated Drop-Off Locations"))
+# Split Layout for Interaction
+col1, col2 = st.columns(2)
 
-if user_recycle == "Curbside Bin":
-    st.error("⚠️ Nope! Plastic bags **CANNOT** go in curbside bins. They jam recycling machines.")
-elif user_recycle == "Trash":
-    st.warning("🚨 Not ideal! Plastic bags should be **recycled properly** at drop-off locations.")
-else:
-    st.success("✅ Correct! Plastic bags should be taken to **designated drop-off locations**, like grocery stores.")
+# Recycling Knowledge Check
+with col1:
+    st.subheader("🧐 Are You Recycling Plastic Bags Correctly?")
+    user_recycle = st.radio(
+        "Where do plastic bags go?",
+        ("Curbside Bin", "Trash", "Designated Drop-Off Locations"),
+        index=None
+    )
 
-st.markdown("### 📍 Find a Drop-Off Location Near You")
-user_city = st.selectbox("Select your city:", list(recycling_centers.keys()))
+    if user_recycle == "Curbside Bin":
+        st.error("⚠️ Incorrect! Plastic bags **CANNOT** go in curbside bins as they jam recycling machines.")
+    elif user_recycle == "Trash":
+        st.warning("🚨 Not ideal! Plastic bags should be **recycled at designated drop-off locations**.")
+    elif user_recycle == "Designated Drop-Off Locations":
+        st.success("✅ Correct! Plastic bags should be taken to **grocery store drop-off points or special collection centers**.")
 
-st.write("♻️ **Nearest Recycling Centers**:")
-for center in recycling_centers[user_city]:
-    st.write(f"- **{center['name']}** ({center['address']})")
+# Drop-off Location Finder
+with col2:
+    st.subheader("📍 Find a Drop-Off Location Near You")
+    recycling_centers = {
+        "Frisco": ["Frisco Environmental Collection Center", "Target Recycling Station", "Whole Foods Market"],
+        "Plano": ["Plano Recycling Drop-Off", "Kroger Recycling", "Trader Joe’s Recycle Center"],
+        "Dallas": ["Dallas Recycling Center", "Sprouts Farmers Market", "Lowe’s Plastic Bag Recycle Bin"],
+        "Austin": ["Austin Recycling Center", "H-E-B Plastic Bag Recycle Station", "Whole Foods Market"],
+        "Houston": ["Houston Eco Recycling", "H-E-B Plastic Bag Drop", "Trader Joe’s Recycle Center"]
+    }
 
-st.markdown("### 🔢 Don't See Your City? Enter Your ZIP Code")
+    user_city = st.selectbox("Select your city:", list(recycling_centers.keys()))
+
+    st.write(f"**♻️ Nearest Recycling Centers in {user_city}:**")
+    for center in recycling_centers[user_city]:
+        st.write(f"- {center}")
+
+# Alternative Entry for ZIP Code
+st.subheader("🔢 Enter Your ZIP Code for More Locations")
 user_zip = st.text_input("Enter your ZIP code:")
 if user_zip:
     st.info(f"🔍 Searching for recycling centers near **ZIP Code {user_zip}**... (Feature Coming Soon!)")
 
-st.markdown("### 🌱 Eco-Friendly Alternatives")
-st.write("- **Reusable Tote Bags** 🛍️ – Durable and stylish!")
-st.write("- **Paper Bags** 📦 – Recyclable and compostable!")
-st.write("- **Biodegradable Bags** 🌿 – A greener option!")
+# Eco-Friendly Alternatives
+st.markdown("---")
+st.subheader("🌱 Eco-Friendly Alternatives to Plastic Bags")
+col3, col4 = st.columns(2)
 
-st.markdown("### 🏆 Take the Quick Recycling Quiz!")
-quiz_question = st.radio("How long does it take for a plastic bag to decompose?", ("5 years", "50 years", "500+ years"))
+with col3:
+    st.write("✅ **Reusable Tote Bags** – Durable, stylish, and sustainable!")
+    st.write("✅ **Paper Bags** – Recyclable and biodegradable.")
+    
+with col4:
+    st.write("✅ **Biodegradable Bags** – Break down naturally, reducing waste.")
+    st.write("✅ **Mesh Bags** – Great for groceries and reusable for years.")
+
+# Quick Recycling Quiz
+st.markdown("---")
+st.subheader("🏆 Quick Recycling Quiz")
+quiz_question = st.radio(
+    "How long does it take for a plastic bag to decompose?",
+    ("5 years", "50 years", "500+ years"),
+    index=None
+)
 
 if quiz_question == "5 years":
     st.error("❌ Nope! Plastic bags last way longer than that.")
 elif quiz_question == "50 years":
     st.warning("⚠️ Close, but plastic bags take even longer to break down!")
-else:
+elif quiz_question == "500+ years":
     st.success("✅ Correct! Plastic bags take **over 500 years** to decompose.")
 
+# Call to Action
 st.success("🚀 Thank you for making a difference! Let's keep plastic bags *Unbinned*!")
 
+# Footer
 st.markdown("---")
-st.markdown("📍 *Powered by Unbinned – A Sustainability Initiative led by Kaushal Reddy Duddugunta*")
-st.markdown("🌍 Follow us on Instagram: [@unbinnedcampaign](#)")
+st.markdown("📍 *Powered by Unbinned – A Student-Led Sustainability Initiative*")
+st.markdown("🌍 Follow us on Instagram: [@Unbinned](#)")
